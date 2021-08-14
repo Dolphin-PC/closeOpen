@@ -6,9 +6,11 @@ const $textUpload = document.getElementById("text_upload");
 const $txButton = document.getElementById("tx_button");
 
 let isEnable = false;
-let loadFile = [];
+let loadNumber = [[]]
+let loadId = [[]];
+let resultArr = [[]]
 
-$fileUpload.addEventListener("change", (e) => {
+$fileUpload.addEventListener("change", (e) => {  
   let input = e.target;
   let reader = new FileReader();
 
@@ -20,27 +22,65 @@ $fileUpload.addEventListener("change", (e) => {
     workBook.SheetNames.forEach((sheetName) => {
       // console.log("SheetName: ", sheetName);
       let rows = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
-      console.log(rows);
-      loadFile = rows.map(rowChange);
+      dataIn(rows)
     });
   };
 
   reader.readAsBinaryString(input.files[0]);
 });
 
-const rowChange = (R) => {
-  if (!R.가맹점관리번호) return console.error("가맹점 관리번호 없음");
-  if (!R.사업자등록번호) return console.error("사업자등록번호 없음");
+function dataIn(rows) {
+  // 전체 엑셀 수
+  let excelCount = 0;
+  // 전체엑셀 수 / 10, 1번 API호출 = 10개의 배열만이 가능하기 때문에
+  let count10;
 
-  return {
-    가맹점관리번호: R.가맹점관리번호,
-    사업자등록번호: R.사업자등록번호,
-  };
-};
+  // 전체 데이터
+  console.log(rows);
 
-$trButton.addEventListener("click", () => {
-  console.log(loadFile);
+  // 전체 데이터 갯수 / 10 만큼 2차원 배열 할당
+  loadNumber = Array(Math.ceil(rows.length/10)).fill(null).map(() => Array())
+  loadId = Array(Math.ceil(rows.length/10)).fill(null).map(() => Array())
+
+  // console.log(loadNumber.length,loadId.length);
+  rows.map(R => {
+    count10 = parseInt(excelCount++ / 10)
+    if (R.가맹점관리번호 && R.사업자등록번호) {
+      loadNumber[count10].push(R.사업자등록번호)
+      loadId[count10].push(R.가맹점관리번호)
+    }
+  });
+}
+
+$trButton.addEventListener("click", async () => {
+  if (!$fileUpload.value) return alert("파일을 업로드해주세요.")
+  // 엑셀 변환해서 Export
+  
+  for (let i = 0; i < loadId.length; i++){
+    let res = await apiReq(loadNumber[i])
+
+    for (let j = 0; j < res.result.length; j++){
+      res.result[j].가맹점관리번호 = loadId[i][j]
+    }
+    resultArr[i] = res.result
+  }
+
+  // console.log(resultArr.flat())
+  alert('변환 완료!')
 });
+
+$dnButton.addEventListener('click', () => {
+  const myHeader = ["가맹점관리번호","b_no"];
+
+
+  const workSheetData = resultArr.flat();
+const workSheet = XLSX.utils.json_to_sheet(workSheetData,{header : myHeader});
+  
+
+const workBook = XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(workBook, workSheet, '사업자등록번호 변환');
+XLSX.writeFile(workBook, '엑셀_파일_명.xlsx');
+})
 
 // sample test
 $txButton.addEventListener("click", async () => {
