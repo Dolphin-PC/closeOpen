@@ -8,6 +8,8 @@ const $fileLabel = document.getElementById("file_label")
 
 const $apiInput = document.getElementById("api_input")
 
+const $bottomAlert = document.getElementById("bottom_alert")
+
 const api = "TA3mQy2sqaAzqSj3AfEiTAQDscdAB%2FLb9O3rCOjjnDsMx3AAiCs5O8D6hR0VnLZBarvFxstIuz%2FE9SB52sgaVA%3D%3D"
 
 let isEnableDownload = false;

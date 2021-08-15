@@ -42,9 +42,3 @@ app.on("activate", () => {
     createWindow();
   }
 });
-
-const $trButton = document.getElementById("tr_button");
-
-$trButton.addEventListener("click", () => {
-  console.log("click!");
-});

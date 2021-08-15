@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>휴/폐업 조회기</title>
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="./assets/index.css" />
     <!-- XLSX CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
 
@@ -21,7 +21,10 @@
     <div class="panel panel-primary" id="file-container">
       <div class="panel-heading">파일로 변환하기</div>
       <div class="panel-body">
-        <a style="color: gray" href="upload_format.xlsx" target="_blank"
+        <a
+          style="color: gray"
+          href="./assets/upload_format.xlsx"
+          target="_blank"
           >파일에는 "가맹점관리번호", "사업자등록번호" 컬럼이 필수입니다.</a
         >
         <div class="file">
@@ -56,5 +59,5 @@
     <div class="alert" role="alert" id="bottom_alert"></div>
   </body>
 
-  <script src="./app.js"></script>
+  <script src="./assets/app.js"></script>
 </html>
