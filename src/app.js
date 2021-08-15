@@ -4,15 +4,22 @@ const $dnButton = document.getElementById("dn_button");
 
 const $textUpload = document.getElementById("text_upload");
 const $txButton = document.getElementById("tx_button");
+const $fileLabel = document.getElementById("file_label")
 
-let isEnable = false;
+const $apiInput = document.getElementById("api_input")
+
+const api = "TA3mQy2sqaAzqSj3AfEiTAQDscdAB%2FLb9O3rCOjjnDsMx3AAiCs5O8D6hR0VnLZBarvFxstIuz%2FE9SB52sgaVA%3D%3D"
+
+let isEnableDownload = false;
 let loadNumber = []
 let loadId = []
 let resultArr = []
 
 $fileUpload.addEventListener("change", (e) => {
-  let input = e.target;
+  let input = e.target
   let reader = new FileReader();
+
+  $fileLabel.innerText = "업로드 중..."
 
   reader.onload = () => {
     let data = reader.result;
@@ -25,8 +32,13 @@ $fileUpload.addEventListener("change", (e) => {
       dataIn(rows);
     });
   };
-
-  reader.readAsBinaryString(input.files[0]);
+  if (input.files.length !== 0) {
+    reader.readAsBinaryString(input.files[0]);
+    $fileLabel.innerText = input.value
+  } else {
+    $fileLabel.innerText = "파일 업로드"
+  }
+  
 });
 
 function dataIn(rows) {
@@ -62,6 +74,7 @@ $trButton.addEventListener("click", async () => {
 
   for (let i = 0; i < loadId.length; i++) {
     let res = await apiReq(loadNumber[i]);
+    if(!res.result || !res.status) return alert("API 오류 발생")
 
     for (let j = 0; j < res.result.length; j++) {
       res.result[j].가맹점관리번호 = loadId[i][j];
@@ -70,10 +83,14 @@ $trButton.addEventListener("click", async () => {
   }
 
   // console.log(resultArr.flat())
+  isEnableDownload = true;
   alert("변환 완료!");
 });
 
 $dnButton.addEventListener("click", () => {
+  if (!$fileUpload.value) return alert("파일을 업로드해주세요.");
+  if(!isEnableDownload) return alert("변환이 완료된 후 다운로드할 수 있습니다.")
+
   const myHeader = ["가맹점관리번호", "사업자등록번호"];
 
   resultArr = resultArr.flat()
@@ -96,7 +113,7 @@ function reNameKey(obj, oldKey, newKey) {
   delete obj[oldKey]
 }
 
-// sample test
+// 단건 처리
 $txButton.addEventListener("click", async () => {
   let text = $textUpload.value;
 
@@ -113,6 +130,7 @@ $txButton.addEventListener("click", async () => {
 });
 
 const apiReq = async (dataArr = []) => {
+  if(!$apiInput.value) return alert("API KEY를 입력해주세요.")
   let _returnValue = {
     result: [],
     status: "",
@@ -132,8 +150,9 @@ const apiReq = async (dataArr = []) => {
     redirect: "follow",
   };
 
+
   await fetch(
-    "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=TA3mQy2sqaAzqSj3AfEiTAQDscdAB%2FLb9O3rCOjjnDsMx3AAiCs5O8D6hR0VnLZBarvFxstIuz%2FE9SB52sgaVA%3D%3D",
+    `https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=${$apiInput.value}`,
     requestOptions
   )
     .then((response) => response.json())
@@ -144,8 +163,8 @@ const apiReq = async (dataArr = []) => {
     })
     .catch((error) => {
       // console.log("error", error);
-      _returnValue.status = "ERROR";
-      _returnValue.result = [];
+      _returnValue.status = undefined
+      _returnValue.result = undefined
     });
 
   return _returnValue;

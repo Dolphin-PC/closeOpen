@@ -4,25 +4,56 @@
     <meta charset="UTF-8" />
     <title>휴/폐업 조회기</title>
     <link rel="stylesheet" href="index.css" />
+    <!-- XLSX CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
 
+    <!-- Bootstrap CDN -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
     />
   </head>
   <body>
-    <h1>사업자 휴/폐업조회</h1>
-    <div>
-      <input type="file" id="file_upload" />
-      <button id="tr_button">변환하기</button>
-      <button id="dn_button">다운로드</button>
+    <div class="page-header">
+      <h1>사업자 휴/폐업조회</h1>
+      <input type="text" id="api_input" placeholder="API KEY를 입력해주세요." />
+    </div>
+    <div class="panel panel-primary" id="file-container">
+      <div class="panel-heading">파일로 변환하기</div>
+      <div class="panel-body">
+        <a style="color: gray" href="upload_format.xlsx" target="_blank"
+          >파일에는 "가맹점관리번호", "사업자등록번호" 컬럼이 필수입니다.</a
+        >
+        <div class="file">
+          <label for="file_upload" id="file_label">파일 업로드</label>
+          <input type="file" id="file_upload" />
+        </div>
+        <div class="button-container">
+          <button id="tr_button" class="btn btn-primary">변환하기</button>
+          <button id="dn_button" class="btn btn-info">다운로드</button>
+        </div>
+      </div>
     </div>
 
-    <div>
-      <input type="text" id="text_upload" />
-      <button id="tx_button">변환하기</button>
+    <div class="panel panel-info">
+      <div class="panel-heading">1건씩 변환하기</div>
+      <div class="panel-body row search-container">
+        <div class="col-md-9 col-xs-9">
+          <input
+            type="text"
+            id="text_upload"
+            placeholder="사업자등록번호를 입력해주세요 (- 제외)"
+          />
+        </div>
+        <div class="col-md-3 col-xs-3">
+          <button id="tx_button" class="btn btn-success col-md-4">
+            변환하기
+          </button>
+        </div>
+      </div>
     </div>
+
+    <div class="alert" role="alert" id="bottom_alert"></div>
   </body>
 
   <script src="./app.js"></script>
