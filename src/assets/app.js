@@ -10,12 +10,18 @@ const $apiInput = document.getElementById("api_input")
 
 const $bottomAlert = document.getElementById("bottom_alert")
 
-const api = "TA3mQy2sqaAzqSj3AfEiTAQDscdAB%2FLb9O3rCOjjnDsMx3AAiCs5O8D6hR0VnLZBarvFxstIuz%2FE9SB52sgaVA%3D%3D"
+// const $copyApiText = document.getElementById('copy_api')
+
+const api = "C1B64USQgdhRo5M9FkN6hp6eNAYGKvWgdD%2FLtqR2mO4p56sxq98tQe%2B%2Fyvbkuzvs4Z9Xq0MfPIRJJ%2FD4SzQB6A%3D%3D"
 
 let isEnableDownload = false;
 let loadNumber = []
 let loadId = []
 let resultArr = []
+
+// $copyApiText.addEventListener('click', e => {
+//   $apiInput.innerHTML = api
+// })
 
 $fileUpload.addEventListener("change", (e) => {
   let input = e.target
@@ -64,7 +70,7 @@ function dataIn(rows) {
   rows.map((R) => {
     count10 = parseInt(excelCount++ / 10);
     if (R.가맹점관리번호 && R.사업자등록번호) {
-      loadNumber[count10].push(R.사업자등록번호);
+      loadNumber[count10].push(R.사업자등록번호+"");
       loadId[count10].push(R.가맹점관리번호);
     }
   });
@@ -72,21 +78,26 @@ function dataIn(rows) {
 
 $trButton.addEventListener("click", async () => {
   if (!$fileUpload.value) return alert("파일을 업로드해주세요.");
-  // 엑셀 변환해서 Export
 
+  
   for (let i = 0; i < loadId.length; i++) {
-    let res = await apiReq(loadNumber[i]);
-    if(!res.result || !res.status) return alert("API 오류 발생")
-
-    for (let j = 0; j < res.result.length; j++) {
-      res.result[j].가맹점관리번호 = loadId[i][j];
+      let res = await apiReq(loadNumber[i]);
+      if(!res.result || !res.status) return alert("API 오류 발생")
+      
+      for (let j = 0; j < res.result.length; j++) {
+        res.result[j].가맹점관리번호 = loadId[i][j];
     }
-    resultArr[i] = res.result;
+    $fileLabel.innerText = `변환 중입니다... ${i}/${loadId.length}`
+    console.log('변환 중입니다..',i,loadId.length);
+      resultArr[i] = res.result;
   }
 
   // console.log(resultArr.flat())
   isEnableDownload = true;
+  $fileLabel.innerText = '변환 완료! (다음 변환을 하시려면 새로고침 후 사용해주세요.'
+  $apiInput.setAttribute = 'disable'
   alert("변환 완료!");
+
 });
 
 $dnButton.addEventListener("click", () => {
@@ -96,7 +107,17 @@ $dnButton.addEventListener("click", () => {
   const myHeader = ["가맹점관리번호", "사업자등록번호"];
 
   resultArr = resultArr.flat()
-  resultArr.forEach(arr => reNameKey(arr, "b_no","사업자등록번호"))
+  resultArr.forEach(arr => {
+    reNameKey(arr, "b_no", "사업자등록번호")
+    reNameKey(arr, "b_stt", "납세자상태(명칭)")
+    reNameKey(arr, "b_stt_cd", "납세자상태(코드)")
+    reNameKey(arr, "tax_type", "과세유형메세지(명칭)")
+    reNameKey(arr, "tax_type_cd	", "과세유형메세지(코드)")
+    reNameKey(arr, "end_dt	", "폐업일 (YYYYMMDD 포맷)")
+    reNameKey(arr, "utcc_yn	", "단위과세전환폐업여부(Y,N)")
+    reNameKey(arr, "tax_type_change_dt	", "최근과세유형전환일자 (YYYYMMDD 포맷)")
+    reNameKey(arr, "invoice_apply_dt	", "세금계산서적용일자 (YYYYMMDD 포맷)")
+  })
   const workSheetData = resultArr
 
 

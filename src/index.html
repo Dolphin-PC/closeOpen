@@ -16,7 +16,14 @@
   <body>
     <div class="page-header">
       <h1>사업자 휴/폐업조회</h1>
+      <a href="https://www.data.go.kr/data/15081808/openapi.do" target="_blank"
+        >관련 국세청 API 홈페이지 바로가기</a
+      >
       <input type="text" id="api_input" placeholder="API KEY를 입력해주세요." />
+      <small id="copy_api"
+        >한결원 공식 API KEY :
+        C1B64USQgdhRo5M9FkN6hp6eNAYGKvWgdD%2FLtqR2mO4p56sxq98tQe%2B%2Fyvbkuzvs4Z9Xq0MfPIRJJ%2FD4SzQB6A%3D%3D</small
+      >
     </div>
     <div class="panel panel-primary" id="file-container">
       <div class="panel-heading">파일로 변환하기</div>
@@ -54,6 +61,10 @@
           </button>
         </div>
       </div>
+      <small
+        >단건 사업자 결과 조회는 [개발자도구(F12) > 콘솔]에서
+        확인가능합니다.</small
+      >
     </div>
 
     <div class="alert" role="alert" id="bottom_alert"></div>
