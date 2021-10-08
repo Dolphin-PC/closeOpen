@@ -10,6 +10,8 @@ const $apiInput = document.getElementById("api_input")
 
 const $bottomAlert = document.getElementById("bottom_alert")
 
+const $singleSearch = document.getElementById("singleSearch")
+
 // const $copyApiText = document.getElementById('copy_api')
 
 const api = "C1B64USQgdhRo5M9FkN6hp6eNAYGKvWgdD%2FLtqR2mO4p56sxq98tQe%2B%2Fyvbkuzvs4Z9Xq0MfPIRJJ%2FD4SzQB6A%3D%3D"
@@ -150,6 +152,8 @@ $txButton.addEventListener("click", async () => {
   const data = await apiReq(arr);
 
   console.log(data);
+  $singleSearch.innerText = `조회한 사업자번호 : ${data.result[0].b_no} / 조회결과 : ${data.result[0].tax_type}`
+  alert(`조회한 사업자번호 : ${data.result[0].b_no} / 조회결과 : ${data.result[0].tax_type}`)
 });
 
 const apiReq = async (dataArr = []) => {
