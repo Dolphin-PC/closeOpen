@@ -47,3 +47,11 @@ button#tx_button {
 div.container {
   margin-bottom: 50px;
 }
+
+ul > li {
+  font-size: large;
+}
+
+ol > li {
+  font-size: medium;
+}
