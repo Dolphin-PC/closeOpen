@@ -8,10 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
 
     <!-- Bootstrap CDN -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
   </head>
 
   <body>
@@ -23,20 +20,13 @@
       <div class="panel-heading">* 사용방법</div>
       <div class="panel-body">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item list-group-item-danger">
-            1. API키 값을 입력합니다.(복사&붙여넣기)
-          </li>
+          <li class="list-group-item list-group-item-danger">1. API키 값을 입력합니다.(복사&붙여넣기)</li>
           <li class="list-group-item list-group-item-info">
             2. 여러 건을 변환하는 경우 (2-1. 파일로 변환하기)
             <ol>
               <li>
                 업로드용 엑셀 파일을 다운받습니다.<br />
-                <a
-                  style="color: gray"
-                  href="./assets/upload_format.xlsx"
-                  target="_blank"
-                  >여기를 눌러 다운로드받기</a
-                >
+                <a style="color: gray" href="./assets/upload_format.xlsx" target="_blank">여기를 눌러 다운로드받기</a>
               </li>
               <li>
                 업로드파일 형식에 맞춰, 변환하고자 하는 값을 입력합니다.
@@ -46,30 +36,18 @@
                 </ol>
               </li>
               <li>[파일 업로드] 버튼을 눌러, 파일을 업로드 합니다.</li>
-              <li>
-                업로드가 완료되면, [변환하기] 버튼을 통해 변환을 시작합니다.
-              </li>
-              <li>
-                변환이 완료된 후, [다운로드] 버튼을 통해 결과 파일을
-                다운받습니다.
-              </li>
+              <li>업로드가 완료되면, [변환하기] 버튼을 통해 변환을 시작합니다.</li>
+              <li>변환이 완료된 후, [다운로드] 버튼을 통해 결과 파일을 다운받습니다.</li>
             </ol>
           </li>
           <li class="list-group-item list-group-item-success">
             3. 한 건씩 변환하는 경우 (2-2. 1건씩 변환하기)
             <ol>
-              <li>
-                (-)을 제외한 10자리 숫자값만을 기입하여, [변환하기]버튼을
-                클릭합니다.
-              </li>
+              <li>(-)을 제외한 10자리 숫자값만을 기입하여, [변환하기]버튼을 클릭합니다.</li>
             </ol>
           </li>
         </ul>
-        <a
-          href="https://www.data.go.kr/data/15081808/openapi.do"
-          target="_blank"
-          >관련 국세청 API 홈페이지 바로가기</a
-        >
+        <a href="https://www.data.go.kr/data/15081808/openapi.do" target="_blank">관련 국세청 API 홈페이지 바로가기</a>
       </div>
     </div>
 
@@ -80,6 +58,8 @@
           type="text"
           id="api_input"
           placeholder="API KEY를 입력해주세요."
+          value="TA3mQy2sqaAzqSj3AfEiTAQDscdAB%2FLb9O3rCOjjnDsMx3AAiCs5O8D6hR0VnLZBarvFxstIuz%2FE9SB52sgaVA%3D%3D
+        "
         />
       </div>
     </div>
@@ -87,12 +67,8 @@
     <div class="panel panel-primary" id="file-container">
       <div class="panel-heading">2-1. 파일로 변환하기</div>
       <div class="panel-body">
-        <a
-          style="color: gray"
-          href="./assets/upload_format.xlsx"
-          target="_blank"
-          >파일에는 "가맹점관리번호", "사업자등록번호" 컬럼이 필수입니다.<br />여기를
-          눌러서 [업로드 양식]파일을 다운로드 받으세요!</a
+        <a style="color: gray" href="./assets/upload_format.xlsx" target="_blank"
+          >파일에는 "가맹점관리번호", "사업자등록번호" 컬럼이 필수입니다.<br />여기를 눌러서 [업로드 양식]파일을 다운로드 받으세요!</a
         >
         <div class="file">
           <label for="file_upload" id="file_label">파일 업로드</label>
@@ -109,16 +85,10 @@
       <div class="panel-heading">2-2. 1건씩 변환하기</div>
       <div class="panel-body row search-container">
         <div class="col-md-9 col-xs-9">
-          <input
-            type="text"
-            id="text_upload"
-            placeholder="사업자등록번호를 입력해주세요 (- 제외)"
-          />
+          <input type="text" id="text_upload" placeholder="사업자등록번호를 입력해주세요 (- 제외)" value="8210201545" />
         </div>
         <div class="col-md-3 col-xs-3">
-          <button id="tx_button" class="btn btn-success col-md-4">
-            변환하기
-          </button>
+          <button id="tx_button" class="btn btn-success col-md-4">변환하기</button>
         </div>
       </div>
       <p id="singleSearch">단건 사업자 결과가 이곳에 표시됩니다.</p>
